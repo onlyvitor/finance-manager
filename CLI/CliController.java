@@ -1,5 +1,6 @@
 package CLI;
 
+import model.Transaction;
 import repository.TransactionRepository;
 import service.FinanceService;
 
@@ -33,8 +34,12 @@ public class CliController {
                     command list:
                       add income|expanse amount category description
                       balance
+                      history
                     """
                 );
+                break;
+            case "history":
+                printHistory();
                 break;
             default:
                 System.out.println("Error: invalid command, type 'help'");
@@ -48,22 +53,63 @@ public class CliController {
             );
             return;
         }
+
         String type = parts[1];
+
+        switch (type) {
+            case "income":
+                newIncome(parts);
+                break;
+            case "expanse":
+                newExpanse(parts);
+        }
+    }
+
+    private void newIncome(String[] parts) {
         double amount;
         try {
             amount = Double.parseDouble(parts[2]);
         } catch (NumberFormatException e) {
-            System.out.println("invalid value");
+            System.out.println(
+                "invalid value: the second argument must be a number"
+            );
             return;
         }
         String category = parts[3];
         String description = parts[4];
-        switch (type) {
-            case "income":
-                fService.addIncome(amount, category, description);
-                break;
-            case "expanse":
-                fService.addExpanse(amount, category, description);
+        fService.addIncome(amount, category, description);
+    }
+
+    private void newExpanse(String[] parts) {
+        double amount;
+        try {
+            amount = Double.parseDouble(parts[2]);
+        } catch (NumberFormatException e) {
+            System.out.println(
+                "invalid value: the second argument must be a number"
+            );
+            return;
+        }
+        String category = parts[3];
+        String description = parts[4];
+        fService.addExpanse(amount, category, description);
+    }
+
+    private void printHistory() {
+        for (Transaction t : fService.getHistory()) {
+            System.out.println(
+                "[" +
+                    t.getDate() +
+                    " | " +
+                    t.getType() +
+                    " | " +
+                    t.getAmount() +
+                    " | " +
+                    t.getCategory() +
+                    " | " +
+                    t.getDescription() +
+                    "]"
+            );
         }
     }
 }

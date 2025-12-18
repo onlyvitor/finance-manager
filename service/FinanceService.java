@@ -1,6 +1,7 @@
 package service;
 
 import java.time.LocalDate;
+import java.util.List;
 import model.Transaction;
 import model.TransactionType;
 import repository.TransactionRepository;
@@ -8,6 +9,7 @@ import repository.TransactionRepository;
 public class FinanceService {
 
     private TransactionRepository repository;
+    private Transaction transaction;
     private int Nextid = 1;
 
     public FinanceService(TransactionRepository repository) {
@@ -45,6 +47,7 @@ public class FinanceService {
             category,
             description
         );
+        System.out.println("Income Successfully realized!");
     }
 
     public void addExpanse(double amount, String category, String description) {
@@ -55,6 +58,7 @@ public class FinanceService {
             category,
             description
         );
+        System.out.println("Expanse Successfully realized!");
     }
 
     public double getBalance() {
@@ -67,7 +71,10 @@ public class FinanceService {
                 balance -= t.getAmount();
             }
         }
-
         return balance;
+    }
+
+    public List<Transaction> getHistory() {
+        return repository.findAll();
     }
 }
