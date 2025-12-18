@@ -1,4 +1,9 @@
+package service;
+
 import java.time.LocalDate;
+import model.Transaction;
+import model.TransactionType;
+import repository.TransactionRepository;
 
 public class FinanceService {
 
