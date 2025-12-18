@@ -42,6 +42,20 @@ O objetivo principal não é interface gráfica, mas aprender a estruturar um si
 
 ---
 
+## Features
+
+- Add Income
+- Add Expanse
+- View Balance
+- Interactive CLI
+
+## Commands
+
+add income <amount> <category> <description>
+add expanse <amount> <category> <description>
+balance
+help
+
 ## Como executar
 
 1. Clone o repositório
